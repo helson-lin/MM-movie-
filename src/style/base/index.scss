@@ -1,0 +1,64 @@
+.p2 {
+  padding: 20px;
+}
+.p1 {
+  padding: 10px;
+}
+.p12 {
+  padding: 0 10px;
+}
+.p22 {
+  padding: 0 20px;
+}
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.click {
+  cursor: pointer;
+  padding: 10px 20px;
+  &:hover {
+    padding: 10px 20px;
+    box-sizing: content-box;
+    background-color: var(--color-secondary);
+    transition: backgroundColor 1s linear;
+    -webkit-transition: backgroundColor 1s linear;
+    -moz-transition: backgroundColor 1s linear;
+    -ms-transition: backgroundColor 1s linear;
+    -o-transition: backgroundColor 1s linear;
+  }
+  .active {
+    padding: 10px 20px;
+    box-sizing: content-box;
+    background-color: var(--color-secondary);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px; /* 竖向滚动条宽度 */
+  height: 10px; /* 横向滚动条高度 */
+}
+
+ 
+::-webkit-scrollbar-thumb {
+  border-radius: 10px; /* 滚动条样式 */
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);  /* 内阴影 */
+  background-color: blue; /* 滚动条颜色 */
+}
+/* 单独设置悬浮颜色 */
+::-webkit-scrollbar-thumb:vertical {
+  background: rgba($color: #fff, $alpha: 0.3);  /* 竖向滑块颜色 */
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background: rgba($color: #fff, $alpha: 0.2); /* 横向滑块颜色 */
+}
+ 
+/* 单独设置滚动条背景色 */
+::-webkit-scrollbar-track-piece:vertical {
+  background: rgba($color: #000, $alpha: 0.1);
+}

@@ -1,0 +1,62 @@
+/* 设置背景图全铺满 */
+@mixin set-back($imgUrl) {
+    background-image: url($imgUrl);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* 定位水平垂直居中 */
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 实现flex 水平垂直居中 */
+@mixin flex-cc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 文字超出省略(单行文字) */
+@mixin word-mission {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin word-line-mission($lineNumber) {
+    display: box;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    word-break: break-all;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lineNumber; /* 这里是超出几行省略 */
+}
+
+@mixin wd($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin border-line {
+    background: linear-gradient(0deg, rgb(50 180 255 / 10%), transparent);
+    border: 2px solid;
+    border-image: linear-gradient(0deg, rgb(50 180 255 / 50%), transparent) 2 2 2 2;
+}
+
+@mixin shadow-c {
+    box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+@mixin shadow-e1 {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+
+@mixin shadow-e2 {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
