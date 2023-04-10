@@ -4,17 +4,17 @@ interface SourceState {
   BASEURL: string;
   t: number;
   pageNo: number;
-  wd: string | null;
+  wd: string;
   list: Movie[];
 }
 
 const useSource = defineStore({
   id: 'source',
   state: (): SourceState => ({
-    BASEURL: '/source',
+    BASEURL: '',
     t: 0,
     pageNo: 1,
-    wd: null,
+    wd: '',
     list: [],
   }),
   actions: {
@@ -28,6 +28,9 @@ const useSource = defineStore({
     },
     setT(val: number) {
       this.t = val
+    },
+    setWd(val: string)  {
+      this.wd = val
     },
     setPage(val: number) {
       this.pageNo = val

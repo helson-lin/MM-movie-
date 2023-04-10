@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import Search from "./components/Search.vue";
+import SourceChanger from "./components/SourceChanger.vue";
 </script>
 <template>
   <div class="full">
-    <div class="header"></div>
+    <div class="header flex-row">
+      <div class="logo">MMo</div>
+      <div class="right">
+        <SourceChanger/>
+      </div>
+    </div>
     <router-view class="view"></router-view>
   </div>
 </template>
@@ -24,22 +29,23 @@ import Search from "./components/Search.vue";
 .header {
   width: 100%;
   height: 50px;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  justify-content: space-between;
   @include shadow-e2;
 }
 .view {
   height: calc(100% - 50px);
 }
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 50px;
+  box-sizing: border-box;
+  line-height: 50px;
   will-change: filter;
   transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+  font-family: Russo One, sans-serif;
+  font-style: italic;
+  filter: drop-shadow(0 10px 10px #646cffaa);
 }
 </style>
 

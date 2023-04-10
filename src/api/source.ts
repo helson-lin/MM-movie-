@@ -148,8 +148,9 @@ export const getVodList = async ({ pg, t }: VodParams) => {
     return axiosAPI.get<CMSDetail>(getBaseUrl(), { ac: 'detail', pg, t })
 }
 
-export const search = async (wd: string) => {
-    return axiosAPI.get<CMSDetail>(getBaseUrl(), { ac: 'detail', wd })
+export const search = async () => {
+    const source = useSource();
+    return axiosAPI.get<CMSDetail>(getBaseUrl(), { ac: 'detail', wd: source.wd })
 }
 
 export const getDetail = async (ids: string) => {

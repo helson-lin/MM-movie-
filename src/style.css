@@ -1,5 +1,6 @@
+@import url('https://fonts.font.im/css?family=Hanalei+Fill|Russo+One');
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Russo One, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }

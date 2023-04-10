@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import Search from "../components/Search.vue";
-import CardList from "../components/CardList.vue";
+// import CardList from "../components/CardList.vue";
 </script>
 <template>
   <div class="index">
     <Search />
-    <CardList/>
+    <!-- <CardList/> -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,6 +14,5 @@ import CardList from "../components/CardList.vue";
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 </style>

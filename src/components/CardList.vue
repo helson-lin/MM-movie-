@@ -4,7 +4,6 @@ import useSource from "../store/source";
 import { useRouter } from "vue-router";
 import type { Movie } from "../api/source";
 const source = useSource();
-
 const router = useRouter();
 const play = ({ vod_id }: Movie) => {
    const path = window.location.origin + router.resolve({ path: `/play/${vod_id}` }).path    //   router.push({ path: `/paly/${vod_id}` });
@@ -12,8 +11,9 @@ const play = ({ vod_id }: Movie) => {
 };
 const list = computed(() => source.getterList);
 </script>
+
 <template>
-  <div class="card-list">
+  <div class="card-list" v-show="list.length >= 1">
     <div
       class="card"
       v-for="card in list"
@@ -29,15 +29,14 @@ const list = computed(() => source.getterList);
 <style lang="scss" scoped>
 .card-list {
   width: 100%;
-  height: 600px;
+  max-height: 400px;
   overflow-y: auto;
-  padding: 20px;
-  margin-top: 90px;
+  padding: 20px 0;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background-color: rgba($color: #000, $alpha: 0.4);
+  background-color: rgba(196, 189, 189, 0.293);
   .card {
     width: 100%;
     display: flex;
@@ -45,11 +44,15 @@ const list = computed(() => source.getterList);
     align-items: center;
     width: 100%;
     font-size: 13px;
-    padding: 10px 0;
+    padding: 10px 20px;
     box-sizing: border-box;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    // color: #000;
     cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, .5);
+      filter: drop-shadow(0 0 2em #646cffaa);
+    }
   }
 }
 </style>

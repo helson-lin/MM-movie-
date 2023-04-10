@@ -14,8 +14,13 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/source': {
+      '/tiankong': {
         target: 'https://m3u8.tiankongapi.com/api.php/provide/vod/',
+        secure: false,
+        // rewrite: path => path.replace(/^\/api/, '/'),
+      },
+      '/baidu': {
+        target: 'https://api.apibdzy.com/api.php/provide/vod/',
         secure: false,
         // rewrite: path => path.replace(/^\/api/, '/'),
       }
