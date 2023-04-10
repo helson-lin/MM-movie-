@@ -3,7 +3,6 @@ import { ref, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { Movie, getDetail } from "../api/source";
 import type { PlayItem, Storage } from "../@types/source"
-import { title } from "process";
 
 const route = useRoute();
 const movie = ref<Movie>();
@@ -84,9 +83,8 @@ const src = computed(() => {
 
 watchEffect(() => {
   if (activeItem.value && movie.value) {
-    const { name } = activeItem.value;
     const titlle = document.title;
-    if (title.endsWith(movie.value?.vod_name)) return
+    if (titlle.endsWith(movie.value?.vod_name)) return
     document.title += `${movie.value?.vod_name}`
   }
 })
