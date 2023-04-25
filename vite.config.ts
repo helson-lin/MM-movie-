@@ -23,6 +23,10 @@ export default defineConfig({
         target: 'https://api.apibdzy.com/api.php/provide/vod/',
         secure: false,
         // rewrite: path => path.replace(/^\/api/, '/'),
+      },
+      '/gaoqing': {
+        target: 'https://api.1080zyku.com/inc/apijson.php/provide/vod/',
+        secure: false,  
       }
     },
   },

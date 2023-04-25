@@ -47,7 +47,6 @@ const changePlay = (val: PlayItem, index: number) => {
   const next = list.value[index + 1];
   nextItem.value = next;
 };
-
 /**
  * @description 处理播放地址
  * @param obj
@@ -55,18 +54,28 @@ const changePlay = (val: PlayItem, index: number) => {
 const handlerPlayUrl = (obj: Movie) => {
   const { vod_play_from, vod_play_note, vod_play_url } = obj;
   const nameKey: { [key: string]: PlayItem[] } = {};
-  console.log(obj, "obj")
-  const typeList: string[] = vod_play_from.split(vod_play_note || '$');
-  const videoList = vod_play_url.split(vod_play_note || '$').map((urls) =>
-    urls.split("#").map((i: string) => {
+  console.log(obj, "obj");
+  if (vod_play_note) {
+    const typeList: string[] = vod_play_from.split(vod_play_note);
+    const videoList = vod_play_url.split(vod_play_note).map((urls) =>
+      urls.split("#").map((i: string) => {
+        const [name, url] = i.split("$");
+        return { name, url };
+      })
+    );
+    typeList.forEach((type, index) => {
+      nameKey[type] = videoList[index];
+    });
+    defaultType.value = typeList[0];
+  } else {
+    const urlList = vod_play_url.split("#").map((i: string) => {
       const [name, url] = i.split("$");
+      console.log(url)
       return { name, url };
-    })
-  );
-  typeList.forEach((type, index) => {
-    nameKey[type] = videoList[index];
-  });
-  defaultType.value = typeList[0];
+    });
+    nameKey[vod_play_from] = urlList
+    defaultType.value = vod_play_from;
+  }
   return nameKey;
 };
 
@@ -85,7 +94,7 @@ const src = computed(() => {
     return (
       baseUrl +
       activeItem.value.url +
-      `${nextItem.value?.url ? `&next=${nextItem.value.url}` : ""}}`
+      `${nextItem.value?.url ? `&next=${nextItem.value.url}` : ""}`
     );
   } else {
     return activeItem.value.url;
@@ -109,14 +118,23 @@ watchEffect(() => {
       <div class="slider">
         <div class="slider-header">
           <div class="name">剧集</div>
-          <icon-font type="icon-paixu1" :size="20" class="click" @click="changeReverse" />
+          <icon-font
+            type="icon-paixu1"
+            :size="20"
+            class="click"
+            @click="changeReverse"
+          />
         </div>
         <div class="url-list flex-row">
           <div class="url" v-for="(item, index) in list" :key="item.name">
-            <div @click="changePlay(item, index)" type="primary" :class="[
+            <div
+              @click="changePlay(item, index)"
+              type="primary"
+              :class="[
                 'btn',
                 activeItem?.name === item.name ? 'active' : 'default',
-              ]">
+              ]"
+            >
               {{ item.name }}
             </div>
           </div>
@@ -136,10 +154,17 @@ watchEffect(() => {
         <div class="types">
           播放源：
           <div class="play-type flex-row">
-            <a-button @click="changeType(item)" type="text" v-for="item in types" :key="item" :class="[
+            <a-button
+              @click="changeType(item)"
+              type="text"
+              v-for="item in types"
+              :key="item"
+              :class="[
                 'type-item',
                 defaultType === item ? 'active' : 'default',
-              ]">{{ item }}</a-button>
+              ]"
+              >{{ item }}</a-button
+            >
           </div>
         </div>
       </div>
@@ -169,7 +194,7 @@ watchEffect(() => {
         display: flex;
         flex-wrap: wrap;
         .url {
-          width: calc(100%/3);
+          width: calc(100% / 3);
         }
       }
     }
@@ -200,11 +225,11 @@ watchEffect(() => {
         display: flex;
         flex-wrap: wrap;
         .url {
-          width: calc(100%/3);
+          width: calc(100% / 3);
         }
       }
     }
-    .info{
+    .info {
       position: absolute;
       top: 250px;
       width: 100%;
@@ -213,14 +238,13 @@ watchEffect(() => {
       background-color: #fff;
       box-sizing: border-box;
       img {
-
         width: 35% !important;
         // height: 100% !important;
       }
       &-detail {
         flex: none !important;
         width: 65% !important;
-      } 
+      }
       .content ::v-deep() p {
         @include word-line-mission(4);
       }
@@ -275,7 +299,7 @@ watchEffect(() => {
       box-sizing: border-box;
 
       .name {
-        font-size: var(  --name-size);
+        font-size: var(--name-size);
         font-weight: bolder;
         line-height: 32px;
         color: var(--color-text-1);
