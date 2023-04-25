@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import SourceChanger from "./components/SourceChanger.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const goHome = () => {
+  router.push({path: "/"}) 
+}
 </script>
 <template>
   <div class="full">
     <div class="header flex-row">
-      <div class="logo">MMo</div>
+      <div class="logo" @click="goHome">MMo</div>
       <div class="right">
         <SourceChanger/>
       </div>
@@ -12,7 +17,6 @@ import SourceChanger from "./components/SourceChanger.vue";
     <router-view class="view"></router-view>
   </div>
 </template>
-
 <style lang="scss" scoped>
 #app {
   width: 100vw;
@@ -45,6 +49,8 @@ import SourceChanger from "./components/SourceChanger.vue";
   transition: filter 300ms;
   font-family: Russo One, sans-serif;
   font-style: italic;
+  user-select: none;
+  cursor: pointer;
   filter: drop-shadow(0 10px 10px #646cffaa);
 }
 </style>

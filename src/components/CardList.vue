@@ -6,8 +6,9 @@ import type { Movie } from "../api/source";
 const source = useSource();
 const router = useRouter();
 const play = ({ vod_id }: Movie) => {
-   const path = window.location.origin + router.resolve({ path: `/play/${vod_id}` }).path    //   router.push({ path: `/paly/${vod_id}` });
-    window.open(path, '_blank')
+  //  const path = window.location.origin + router.resolve({ path: `/play/${vod_id}` }).path    //   router.push({ path: `/paly/${vod_id}` });
+    // window.open(path, '_blank')
+    router.push({path: `/play/${vod_id}`})
 };
 const list = computed(() => source.getterList);
 </script>
@@ -28,7 +29,8 @@ const list = computed(() => source.getterList);
 
 <style lang="scss" scoped>
 .card-list {
-  width: 100%;
+  width: var( --search-list-width);
+  margin: 0 auto;
   max-height: 400px;
   overflow-y: auto;
   padding: 20px 0;

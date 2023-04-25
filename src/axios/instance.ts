@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 
 const instance = axios.create({
-    headers: {}
+    headers: {},
+    timeout: 5000,
 })
 instance.interceptors.request.use((config) => {
     const configBackup = config
@@ -55,6 +56,7 @@ instance.interceptors.response.use(
                     err.message = 'http版本不支持该请求';
                     break;
                 default:
+                    console.log(err)
                 // err.message = `连接错误${error.response.status}`;
                 // window.vm.$router.push({ path: '/400' })
             }

@@ -25,6 +25,7 @@ const useSource = defineStore({
      */
     setBaseUrl(val: string) {
       this.BASEURL = val
+      localStorage.setItem('mt_baseurl', val)
     },
     setT(val: number) {
       this.t = val

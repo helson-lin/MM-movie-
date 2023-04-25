@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 interface Meta {
   title: string;
@@ -9,7 +9,12 @@ interface Meta {
 // @ts-ignore
 const Index = () => import("./page/Index.vue");
 // @ts-ignore
+// const MIndex = () => import("./page/Home-M.vue");
+// @ts-ignore
 const Play = () => import("./page/Play.vue");
+
+// const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 
