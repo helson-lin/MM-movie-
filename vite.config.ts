@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import removeConsole from "vite-plugin-remove-console";
 import * as path from "path";
 
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(),removeConsole()],
   resolve: {
     alias: {
       '#': path.resolve(__dirname, './public/'),
@@ -14,15 +14,24 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/tiankong': {
+      '/tiankong/': {
         target: 'https://m3u8.tiankongapi.com/api.php/provide/vod/',
         secure: false,
         // rewrite: path => path.replace(/^\/api/, '/'),
       },
-      '/baidu': {
+      '/baidu/': {
         target: 'https://api.apibdzy.com/api.php/provide/vod/',
         secure: false,
-        // rewrite: path => path.replace(/^\/api/, '/'),
+        rewrite: path => path.replace(/^\/baidu/, '/'),
+      },
+      '/gaoqing/': {
+        target: 'https://api.1080zyku.com/inc/apijson.php/',
+        secure: false,
+      },
+      '/wujin/': {
+        target: 'https://api.wujinapi.me/api.php/provide/vod/',
+        secure: false,
+        rewrite: path => path.replace(/^\/wujin/, '/'),
       }
     },
   },

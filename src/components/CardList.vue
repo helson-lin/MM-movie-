@@ -5,10 +5,25 @@ import { useRouter } from "vue-router";
 import type { Movie } from "../api/source";
 const source = useSource();
 const router = useRouter();
+function isMobile() {
+  var ua = navigator.userAgent.toLowerCase();  
+  var isAndroid = /android/i.test(ua);
+  var isiPhone = /iphone/i.test(ua);
+  var isiPad = /ipad/i.test(ua);
+  var isiPod = /ipod/i.test(ua);
+  var isWindowsPhone = /windows phone/i.test(ua);
+  return isAndroid || isiPhone || isiPad || isiPod || isWindowsPhone 
+    || window.screen.width < 768 
+    || window.matchMedia("only screen and (max-width: 767px)").matches;
+}
 const play = ({ vod_id }: Movie) => {
   //  const path = window.location.origin + router.resolve({ path: `/play/${vod_id}` }).path    //   router.push({ path: `/paly/${vod_id}` });
     // window.open(path, '_blank')
-    router.push({path: `/play/${vod_id}`})
+    if (isMobile()) {
+      router.push({path: `/mplay/${vod_id}`})
+    } else {
+      router.push({path: `/play/${vod_id}`})
+    }
 };
 const list = computed(() => source.getterList);
 </script>

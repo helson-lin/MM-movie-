@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import SourceChanger from "./components/SourceChanger.vue";
 import { useRouter } from "vue-router";
+import { getCurrentInstance } from "vue";
+const instance = getCurrentInstance();
+// console.log(instance?.appContext?.config.globalProperties.$helper)
+window.onload = () => instance?.appContext?.config.globalProperties.$helper.lockScreen();
 const router = useRouter();
 const goHome = () => {
-  router.push({path: "/"}) 
+  router.push({ path: "/" })
 }
 </script>
 <template>
@@ -11,7 +15,7 @@ const goHome = () => {
     <div class="header flex-row">
       <div class="logo" @click="goHome">MMo</div>
       <div class="right">
-        <SourceChanger/>
+        <SourceChanger />
       </div>
     </div>
     <router-view class="view"></router-view>
@@ -24,6 +28,7 @@ const goHome = () => {
   overflow: hidden;
   background-color: var(--background-color);
 }
+
 .full {
   width: 100%;
   height: 100%;
@@ -38,9 +43,11 @@ const goHome = () => {
   justify-content: space-between;
   @include shadow-e2;
 }
+
 .view {
   height: calc(100% - 50px);
 }
+
 .logo {
   height: 50px;
   box-sizing: border-box;
@@ -61,6 +68,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
 #app {
   width: 100vw;
   height: 100vh;

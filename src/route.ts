@@ -12,6 +12,8 @@ const Index = () => import("./page/Index.vue");
 // const MIndex = () => import("./page/Home-M.vue");
 // @ts-ignore
 const Play = () => import("./page/Play.vue");
+// @ts-ignore
+const Mplay = () => import("./page/Mplay.vue");
 
 // const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
@@ -34,6 +36,14 @@ const routes: Array<RouteRecordRaw> = [
       title: "播放"
     },
     component: Play,
+  },
+  {
+    path: "/mplay/:id",
+    name: "mplay",
+    meta: {
+      title: "播放"
+    },
+    component: Mplay,
   }
 ];
 

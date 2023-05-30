@@ -113,22 +113,6 @@ watchEffect(() => {
       <div class="inner-player">
         <iframe :src="src" frameborder="0" allowfullscreen></iframe>
       </div>
-      <div class="slider">
-        <div class="slider-header">
-          <div class="name">剧集</div>
-          <icon-font type="icon-paixu1" :size="20" class="click" @click="changeReverse" />
-        </div>
-        <div class="url-list flex-row">
-          <div class="url" v-for="(item, index) in list" :key="item.name">
-            <div @click="changePlay(item, index)" type="primary" :class="[
-              'btn',
-              activeItem?.name === item.name ? 'active' : 'default',
-            ]">
-              {{ item.name }}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="info" v-show="movie">
       <img :src="movie?.vod_pic" alt="" srcset="" />
@@ -151,107 +135,30 @@ watchEffect(() => {
         </div>
       </div>
     </div>
+    <div class="play-bottom">
+      <div class="play-list">
+        <!-- 排序  -->
+        <div class="play-sort">
+          <div class="name">剧集</div>
+          <icon-font type="icon-paixu1" :size="20" class="click" @click="changeReverse" />
+        </div>
+        <!-- 播放列表 -->
+        <div class="url-list flex-row">
+          <div class="url" v-for="(item, index) in list" :key="item.name">
+            <div @click="changePlay(item, index)" type="primary" :class="[
+              'btn',
+              activeItem?.name === item.name ? 'active' : 'default',
+            ]">
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@media only screen and (max-width: 71.25em) {
-  .play {
-    position: relative;
-
-    .box {
-      height: auto !important;
-      display: flex;
-      flex-direction: column !important;
-
-      .inner-player {
-        width: 100% !important;
-        height: 350px !important;
-      }
-    }
-
-    .slider {
-      position: absolute;
-      top: 240px;
-      width: 100%;
-      padding: 20px !important;
-      z-index: 2;
-
-      .url-list {
-        --row-nm: 8;
-        --block-size: 100px;
-        height: 200px !important;
-      }
-    }
-
-    .info {
-      position: absolute;
-      top: 350px;
-      padding: 10px 20px !important;
-
-      .img {
-        max-height: 190px !important;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 48em) {
-  .play {
-    .box {
-      height: auto !important;
-      display: flex;
-      flex-direction: column !important;
-
-      .inner-player {
-        height: 200px !important;
-      }
-    }
-
-    .slider {
-      position: absolute;
-      top: 240px;
-      width: 100%;
-      padding: 0 !important;
-      height: 210px !important;
-      &-header {
-        padding-bottom: 10px !important;
-      }
-
-      .url-list {
-        --row-nm: 4;
-        --block-size: 85px;
-        height: 180px !important;
-        overflow-y: visible;
-      }
-    }
-
-    .info {
-      position: absolute;
-      top: 200px;
-      width: 100%;
-      padding: 10px !important;
-      border-top: 1px var(--color-text-1);
-      background-color: #fff;
-      box-sizing: border-box;
-
-      img {
-        width: 35% !important;
-        max-height: 190px !important;
-      }
-
-      &-detail {
-        flex: none !important;
-        width: 65% !important;
-      }
-
-      .content ::v-deep() p {
-        @include word-line-mission(4);
-      }
-    }
-  }
-}
-
 .play {
   margin: 0 auto;
   max-width: var(--play-max-width);
@@ -267,9 +174,8 @@ watchEffect(() => {
 
   .box {
     flex: 1;
-    height: 500px;
+    height: 200px;
     background-color: var(--color-bg-3);
-    // @include shadow-e2;
 
     .inner-player {
       width: 889px;
@@ -286,12 +192,14 @@ watchEffect(() => {
   }
 
   .info {
-    padding-top: 20px;
+    // padding-top: 20px;
+    padding: 10px 10px;
+    box-sizing: border-box;
     display: flex;
 
     img {
-      width: 160px;
-      max-height: 240px;
+      width: 120px;
+      max-height: 180px;
     }
 
     &-detail {
@@ -346,23 +254,28 @@ watchEffect(() => {
       }
     }
   }
-
-  .slider {
-    position: relative;
-    flex: 1;
-    height: 100%;
-    padding: 10px 20px;
+  .play-bottom {
+    height: calc(100% - 380px);
+    padding: 0px 10px;
     box-sizing: border-box;
-    border: 6px;
+  }
+  .play-list {
+    height: 100%;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-neutral-2);
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
 
-    .slider-header {
+    // align-items: center;
+    .play-sort {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 20px;
-      padding-bottom: 20px;
+      padding: 10px 0px;
       box-sizing: border-box;
-      background-color: var(--color-fill-1);
       border-radius: 6px 6px 0px 0px;
 
       .click:hover {
@@ -372,24 +285,24 @@ watchEffect(() => {
   }
 
   .url-list {
-    --row-nm: 1;
-    --block-size: 280px;
+    --row-nm: 3;
+    --block-size: 100px;
     --row-mc: 5px;
     --row-mr: calc((100% - (var(--block-size) * var(--row-nm))) / (var(--row-nm) * 2));
-    flex: 1;
+    width: 100%;
     box-sizing: border-box;
-    height: calc(100% - 45px);
+    height: calc(100% - 40px);
     padding: 10px 10px;
     overflow-y: auto;
     flex-wrap: wrap;
     align-content: flex-start;
     border-top: 1px solid var(--color-border-2);
-    background-color: var(--color-fill-1);
     border-radius: 0 0 6px 6px;
 
     .url {
       margin: var(--row-mc) var(--row-mr);
       width: var(--block-size);
+      text-align: center;
 
       &:hover {
         background-color: #fff;
@@ -401,9 +314,10 @@ watchEffect(() => {
         line-height: 30px;
         padding: 0 10px;
         box-sizing: border-box;
-        text-align: left;
+        text-align: center;
         border-radius: 6px;
         cursor: pointer;
+        border: 1px solid var(--color-border);
 
         &.active {
           background-color: #fff;

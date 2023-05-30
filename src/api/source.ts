@@ -156,3 +156,11 @@ export const search = async () => {
 export const getDetail = async (ids: string) => {
     return axiosAPI.get<CMSDetail>(getBaseUrl(), { ids, ac: 'detail' })
 }
+
+/**
+ * @description get command source 
+ * @returns 
+ */
+export const getIndex = async () => {
+    return axiosAPI.get<CMSDetail>(getBaseUrl(), { ac: 'list' })
+}
