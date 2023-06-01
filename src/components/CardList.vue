@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import useSource from "../store/source";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import type { Movie } from "../api/source";
 const source = useSource();
 const router = useRouter();
+const route = useRoute();
 function isMobile() {
   var ua = navigator.userAgent.toLowerCase();  
   var isAndroid = /android/i.test(ua);
@@ -19,10 +20,11 @@ function isMobile() {
 const play = ({ vod_id }: Movie) => {
   //  const path = window.location.origin + router.resolve({ path: `/play/${vod_id}` }).path    //   router.push({ path: `/paly/${vod_id}` });
     // window.open(path, '_blank')
+    // console.log(route.query.source)
     if (isMobile()) {
-      router.push({path: `/mplay/${vod_id}`})
+      router.push({path: `/mplay/${vod_id}`, query: route.query})
     } else {
-      router.push({path: `/play/${vod_id}`})
+      router.push({path: `/play/${vod_id}`, query: route.query})
     }
 };
 const list = computed(() => source.getterList);

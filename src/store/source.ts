@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Movie } from "../api/source"
+// import { useRouter } from 'vue-router'
 interface SourceState {
   BASEURL: string;
   t: number;
@@ -7,7 +8,7 @@ interface SourceState {
   wd: string;
   list: Movie[];
 }
-
+// const router = useRouter()
 const useSource = defineStore({
   id: 'source',
   state: (): SourceState => ({
@@ -25,12 +26,11 @@ const useSource = defineStore({
      */
     setBaseUrl(val: string) {
       this.BASEURL = val
-      localStorage.setItem('mt_baseurl', val)
     },
     setT(val: number) {
       this.t = val
     },
-    setWd(val: string)  {
+    setWd(val: string) {
       this.wd = val
     },
     setPage(val: number) {

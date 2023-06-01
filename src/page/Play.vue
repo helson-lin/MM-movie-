@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { Movie, getDetail } from "../api/source";
 import type { PlayItem, Storage } from "../@types/source";
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed, watchEffect, watch } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@arco-design/web-vue";
+import router from "../route";
 const IconFont = Icon.addFromIconFontCn({
   src: "https://at.alicdn.com/t/c/font_4035714_3hcacpu5wbz.js",
 });
@@ -43,6 +44,7 @@ const changeType = (val: string) => (defaultType.value = val);
  * @description 切换播放项
  */
 const changePlay = (val: PlayItem, index: number) => {
+  console.log("changePlay", val, index)
   activeItem.value = val;
   const next = list.value[index + 1];
   nextItem.value = next;
@@ -79,7 +81,8 @@ const handlerPlayUrl = (obj: Movie) => {
 
 const list = computed(() => {
   if (!defaultType.value) return [];
-  activeItem.value = storage.value[defaultType.value][0];
+  // activeItem.value = storage.value[defaultType.value][0];
+  // console.log("default play", activeItem.value)
   const list = storage.value[defaultType.value] || [];
   return reverse.value ? list.reverse() : list;
 });
@@ -98,9 +101,16 @@ const src = computed(() => {
     return activeItem.value.url;
   }
 });
-
+watch(list, (val) => {
+  if (!defaultType.value) return;
+  if (!storage.value) return;
+  activeItem.value = storage.value[defaultType.value][0];
+})
 watchEffect(() => {
   if (activeItem.value && movie.value) {
+    // console.log(route)
+    router.push({ query: { ...route.query, type: defaultType.value, ix: activeItem.value.name } })
+    // 设置路由参数
     const titlle = document.title;
     if (titlle.endsWith(movie.value?.vod_name)) return;
     document.title += `${movie.value?.vod_name}`;
@@ -214,6 +224,7 @@ watchEffect(() => {
       width: 100%;
       padding: 0 !important;
       height: 210px !important;
+
       &-header {
         padding-bottom: 10px !important;
       }
@@ -411,4 +422,5 @@ watchEffect(() => {
       }
     }
   }
-}</style>
+}
+</style>

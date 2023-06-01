@@ -5,7 +5,10 @@ import * as path from "path";
 
 
 export default defineConfig({
-  plugins: [vue(),removeConsole()],
+  plugins: [
+    vue(),
+    removeConsole()
+  ],
   resolve: {
     alias: {
       '#': path.resolve(__dirname, './public/'),

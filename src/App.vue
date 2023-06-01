@@ -1,23 +1,24 @@
 <script lang="ts" setup>
 import SourceChanger from "./components/SourceChanger.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { getCurrentInstance } from "vue";
 const instance = getCurrentInstance();
-// console.log(instance?.appContext?.config.globalProperties.$helper)
 window.onload = () => instance?.appContext?.config.globalProperties.$helper.lockScreen();
 const router = useRouter();
+const route = useRoute()
 const goHome = () => {
-  router.push({ path: "/" })
+  router.push({ path: "/", query: route.query })
 }
 </script>
 <template>
   <div class="full">
-    <div class="header flex-row">
+    <!-- header -->
+    <header class="header flex-row">
       <div class="logo" @click="goHome">MMo</div>
       <div class="right">
         <SourceChanger />
       </div>
-    </div>
+    </header>
     <router-view class="view"></router-view>
   </div>
 </template>
