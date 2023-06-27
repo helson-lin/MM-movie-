@@ -7,6 +7,14 @@
         {
             "src": "/gaoqing/(.*)",
             "dest": "https://api.1080zyku.com/inc/apijson.php/$1"
+        },
+        {
+            "src": "/baidu/(.*)",
+            "dest": "https://api.apibdzy.com/api.php/provide/vod/$1"
+        },
+        {
+            "src": "/tiankong/(.*)",
+            "dest": "https://m3u8.tiankongapi.com/api.php/provide/vod/$1"
         }
     ]
 }
