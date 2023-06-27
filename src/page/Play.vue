@@ -99,7 +99,7 @@ const list = computed(() => {
 
 const types = computed(() => Object.keys(storage.value));
 const src = computed(() => {
-  const baseUrl = "https://pan.helson-lin.cn/player/?url=";
+  const baseUrl = "https://player.helson-lin.cn/player/?url=";
   if (!activeItem.value || !activeItem) return "";
   const isM3u8 = activeItem.value.url?.endsWith(".m3u8");
   if (isM3u8) {
