@@ -34,6 +34,19 @@ const getData = async (id: string) => {
   }
 };
 
+/**
+ *  async data to local storage 
+ * vod_id as key
+*/
+const syncDataToStorage = async () => {
+  if (vodId && activeItem.value) {
+    const { name } = activeItem.value
+    // console.log('setting vod', activeItem.value)
+    // localStorage.removeItem(`mm_${vodId}`)
+    localStorage.setItem(`mm_${vodId}`, JSON.stringify({ type: defaultType.value, ix: name, source: route.query.source }))
+  }
+}
+
 if (vodId) getData(vodId as string);
 /**
  * @description 设置默认播放类型：m3u8/yun
@@ -44,7 +57,8 @@ const changeType = (val: string) => (defaultType.value = val);
  * @description 切换播放项
  */
 const changePlay = (val: PlayItem, index: number) => {
-  console.log("changePlay", val, index)
+  // console.log("changePlay", val, index, route.query, route.params)
+  // aync data to local storage
   activeItem.value = val;
   const next = list.value[index + 1];
   nextItem.value = next;
@@ -63,9 +77,7 @@ const splitType = (val: string, vod_play_note: string) => {
 const handlerPlayUrl = (obj: Movie) => {
   const { vod_play_from, vod_play_note, vod_play_url } = obj;
   const nameKey: { [key: string]: PlayItem[] } = {};
-  // console.log(obj, "obj")
   const typeList: string[] = vod_play_from.split(vod_play_note || '$');
-  // console.log(vod_play_url.split(vod_play_note || '#'), "typeList", vod_play_url)
   const videoList = splitType(vod_play_url, vod_play_note).map((urls) =>
     urls.split("#").map((i: string) => {
       const [name, url] = i.split("$");
@@ -81,11 +93,10 @@ const handlerPlayUrl = (obj: Movie) => {
 
 const list = computed(() => {
   if (!defaultType.value) return [];
-  // activeItem.value = storage.value[defaultType.value][0];
-  // console.log("default play", activeItem.value)
   const list = storage.value[defaultType.value] || [];
   return reverse.value ? list.reverse() : list;
 });
+
 const types = computed(() => Object.keys(storage.value));
 const src = computed(() => {
   const baseUrl = "https://pan.helson-lin.cn/player/?url=";
@@ -101,15 +112,35 @@ const src = computed(() => {
     return activeItem.value.url;
   }
 });
+/** set play item by type and name */
+const setActiveItemByTypeAndName = (type?: string, name?: string) => {
+  if (!type || !name) return;
+  const list = storage.value[type];
+  if (!list) return;
+  const matchItem = list.find(i => i.name === name);
+  activeItem.value = matchItem
+}
+/* when list have already, set default play item  */
 watch(list, (val) => {
   if (!defaultType.value) return;
   if (!storage.value) return;
-  activeItem.value = storage.value[defaultType.value][0];
+  // get router info
+  const { type, ix } = route.query
+  const localPlayInfo = localStorage.getItem(`mm_${vodId}`)
+  if (type && ix) {
+    setActiveItemByTypeAndName(type as string, ix as string);
+  } else if (localPlayInfo) {
+    const { type, ix } = JSON.parse(localPlayInfo)
+    setActiveItemByTypeAndName(type as string, ix as string);
+  } else {
+    // default play first
+    activeItem.value = storage.value[defaultType.value][0];
+  }
 })
 watchEffect(() => {
   if (activeItem.value && movie.value) {
-    // console.log(route)
-    router.push({ query: { ...route.query, type: defaultType.value, ix: activeItem.value.name } })
+    router.push({ path: route.path, query: { ...route.query, type: defaultType.value, ix: activeItem.value.name } })
+    setTimeout(() => syncDataToStorage())
     // 设置路由参数
     const titlle = document.title;
     if (titlle.endsWith(movie.value?.vod_name)) return;

@@ -1,13 +1,26 @@
 <script lang="ts" setup>
 import SourceChanger from "./components/SourceChanger.vue";
 import { useRouter, useRoute } from "vue-router";
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, computed, watch } from "vue";
 const instance = getCurrentInstance();
 window.onload = () => instance?.appContext?.config.globalProperties.$helper.lockScreen();
 const router = useRouter();
 const route = useRoute()
+
+const path = computed(() => route.path)
 const goHome = () => {
-  router.push({ path: "/", query: route.query })
+  // router query 只需要source
+  delete route.query?.type;
+  delete route.query?.ix;
+  const queryParams = route.query
+  const query: { [key: string]: string } = {}
+  if (queryParams.source) query['source'] = queryParams.source as string
+  const newRoute = router.resolve({ path: "/", query, replace: true })
+  const fullPath = window.location.origin + '/' + newRoute.href
+  // console.log(window.location.origin + '/' + newRoute.href,"newRoute")
+  // window.location = (window.location.origin + '/' + newRoute.href) as unknown as Location
+  // location.href = fullPath
+  router.push({ path: '/', query, replace: true })
 }
 </script>
 <template>

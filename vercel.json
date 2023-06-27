@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/wujin/(.*)",
+        "destination": "/wujin/"
+      },
+      {
+        "source": "/gaoqing/(.*)",
+        "destination": "/gaoqing/"
+      }
+    ]
+  }
+  

@@ -70,7 +70,6 @@ watchEffect(
   () => {
     setTimeout(() => {
       const routeSource = getUrlParam('source') ?? null
-      console.log(routeSource)
       if (!routeSource && list.value) {
         addRouterSource(list.value[0].url)
         source.setBaseUrl(list.value[0].url);
