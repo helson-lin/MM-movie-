@@ -15,6 +15,10 @@
         {
             "src": "/tiankong/(.*)",
             "dest": "https://m3u8.tiankongapi.com/api.php/provide/vod/$1"
+        },
+        {
+            "src": "/ikun/(.*)",
+            "dest": "https://ikunzyapi.com/api.php/provide/vod/$1"
         }
     ]
 }
