@@ -353,6 +353,7 @@ watchEffect(() => {
       .lang,
       .content {
         color: var(--color-text-2);
+        font-weight: 500;
 
         ::v-deep() p {
           display: contents;
